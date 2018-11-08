@@ -1,7 +1,8 @@
 var goblins = {
     goblinArray: [
         goblin1 = {
-            name: "Testingname",
+            name: "Goblin Name 1",
+            nameElement: $("#goblin-1-name"),
             maxHP: 150,
             currentHP: 110,
             currentAttack: 18,
@@ -12,6 +13,7 @@ var goblins = {
         },
         goblin2 = {
             name: "Goblin 2",
+            nameElement: $("#goblin-2-name"),
             maxHP: 120,
             currentHP: 90,
             currentAttack: 10,
@@ -22,6 +24,7 @@ var goblins = {
         },
         goblin3 = {
             name: "Goblin 3",
+            nameElement: $("#goblin-3-name"),
             maxHP: 180,
             currentHP: 80,
             currentAttack: 15,
@@ -32,6 +35,7 @@ var goblins = {
         },
         goblin4 = {
             name: "Goblin 4",
+            nameElement: $("#goblin-4-name"),
             maxHP: 100,
             currentHP: 100,
             currentAttack: 20,
@@ -60,15 +64,10 @@ var game = {
             goblins.goblinArray[i].currentAttack = goblins.goblinArray[i].baseAttack;
             goblins.goblinArray[i].currentHP = goblins.goblinArray[i].maxHP;
             goblins.goblinArray[i].healthBar.css("width", 190);
+            goblins.goblinArray[i].healthText.text(goblins.goblinArray[i].currentHP + "/" + goblins.goblinArray[i].maxHP);
+            goblins.goblinArray[i].nameElement.text(goblins.goblinArray[i].name);
         }
         $("#restart-button").hide();
-        $("#gob-1-health").text(goblins.goblinArray[0].currentHP + "/" + goblins.goblinArray[0].maxHP);
-        $("#gob-2-health").text(goblins.goblinArray[1].currentHP + "/" + goblins.goblinArray[1].maxHP);
-        $("#gob-3-health").text(goblins.goblinArray[2].currentHP + "/" + goblins.goblinArray[2].maxHP);
-        $("#gob-4-health").text(goblins.goblinArray[3].currentHP + "/" + goblins.goblinArray[3].maxHP);
-        
-        
-
     },
 
     updateGameText: function() {
@@ -183,10 +182,6 @@ $(document).ready(function() {
     }),
     
     game.newGame();
-    $("#goblin-1-name").text(goblins.goblinArray[0].name);
-    $("#goblin-2-name").text(goblins.goblinArray[1].name);
-    $("#goblin-3-name").text(goblins.goblinArray[2].name);
-    $("#goblin-4-name").text(goblins.goblinArray[3].name);
     game.gobName1.show().arctext({radius: 500});
     game.gobName2.show().arctext({radius: 500});
     game.gobName3.show().arctext({radius: 500});
