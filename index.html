@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Germania+One" rel="stylesheet">
+        <link rel="stylesheet" href="assets/css/reset.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+        <title>Goblin Grind RPG</title>
+    </head>
+    <body>
+        <div ></div>
+        <div class="bg-image"></div>
+        <header>
+            Goblin Grind RPG
+        </header>
+        <div class="clearfix container">
+            <div id="hero-select" class="clearfix">
+                Choose Your Goblin<br>
+                <div id="goblin-1" class="goblin-card choose-hero">
+                    <img src="assets/images/goblin1.jpg">
+                    <div class="health-bar">
+                        <div id="health-bar-1" class="health-current">
+                            <div id="gob-1-health" class="health-text"></div>
+                        </div>
+                    </div>
+                </div> 
+                <div id="goblin-2" class="goblin-card choose-hero">
+                    <img src="assets/images/goblin2.jpg">
+                    <div class="health-bar">
+                        <div id="health-bar-2" class="health-current">
+                            <div id="gob-2-health" class="health-text"></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="goblin-3" class="goblin-card choose-hero">
+                    <img src="assets/images/goblin3.jpg">
+                    <div class="health-bar">
+                        <div id="health-bar-3" class="health-current">
+                            <div id="gob-3-health" class="health-text"></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="goblin-4" class="goblin-card choose-hero">
+                    <img src="assets/images/goblin4.jpg">
+                    <div class="health-bar">
+                        <div id="health-bar-4" class="health-current">
+                            <div id="gob-4-health" class="health-text"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="enemy-select" class="clearfix">
+                Choose Your Enemy<br>
+            </div><br>
+            <div class="goblin-div">
+                <div id="current-hero">
+                    Your Hero<br>
+                </div>
+                <div class="buttons">
+                    <button id="attack-button">Attack! <i class="fas fa-skull-crossbones"></i></button><br><br>
+                    <button id="restart-button">Restart <i class="fas fa-redo-alt"></i></button>
+                </div>
+            </div>
+            <div class="goblin-div">
+                <div id="current-enemy">
+                    Your Enemy<br>
+                </div><br>
+            </div>
+
+            <div id="combat-text"></div>
+        </div>
+        <script src="assets/javascript/game.js"></script>    
+    </body>
+</html>
