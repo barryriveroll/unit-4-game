@@ -1,8 +1,8 @@
 var goblins = {
     goblinArray: [
         goblin1 = {
-            name: "Goblin 1",
-            maxHP: 110,
+            name: "Testingname",
+            maxHP: 150,
             currentHP: 110,
             currentAttack: 18,
             baseAttack: 18,
@@ -12,7 +12,7 @@ var goblins = {
         },
         goblin2 = {
             name: "Goblin 2",
-            maxHP: 90,
+            maxHP: 120,
             currentHP: 90,
             currentAttack: 10,
             baseAttack: 10,
@@ -22,7 +22,7 @@ var goblins = {
         },
         goblin3 = {
             name: "Goblin 3",
-            maxHP: 80,
+            maxHP: 180,
             currentHP: 80,
             currentAttack: 15,
             baseAttack: 15,
@@ -50,6 +50,10 @@ var game = {
     heroSelect: false,
     enemySelect: false,
     combatText: $("#combat-text"),
+    gobName1: $("#goblin-1-name").hide(),
+    gobName2: $("#goblin-2-name").hide(),
+    gobName3: $("#goblin-3-name").hide(),
+    gobName4: $("#goblin-4-name").hide(),
     
     newGame: function() {
         for (var i = 0; i < goblins.goblinArray.length; i++) {
@@ -63,6 +67,8 @@ var game = {
         $("#gob-3-health").text(goblins.goblinArray[2].currentHP + "/" + goblins.goblinArray[2].maxHP);
         $("#gob-4-health").text(goblins.goblinArray[3].currentHP + "/" + goblins.goblinArray[3].maxHP);
         
+        
+
     },
 
     updateGameText: function() {
@@ -91,20 +97,20 @@ var game = {
         }, 400);
         
         goblins.currentEnemy.currentHP -= goblins.currentHero.currentAttack;
-        this.changeCombatText("<div>You attacked " + goblins.currentEnemy.name + " for " + goblins.currentHero.currentAttack + " damage!");
+        this.changeCombatText("<div>You attacked <span id='combat-enemy-name'>" + goblins.currentEnemy.name + " </span> for " + goblins.currentHero.currentAttack + " damage!");
         if (goblins.currentEnemy.currentHP <= 0) {
-            this.changeCombatText("<div>You killed " + goblins.currentEnemy.name + "!");
+            this.changeCombatText("<div>You killed <span id='combat-enemy-name'>" + goblins.currentEnemy.name + "</span>!");
             this.enemySelect = false;
             $("#current-enemy").children().removeClass("choose-enemy").hide();
         } else {
             goblins.currentHero.currentHP -= goblins.currentEnemy.baseAttack;
             setTimeout (function() {
-                game.changeCombatText("<div>" + goblins.currentEnemy.name + " attacked you for " + goblins.currentEnemy.baseAttack + " damage!");
+                game.changeCombatText("<div><span id='combat-enemy-name'>" + goblins.currentEnemy.name + " </span>attacked you for " + goblins.currentEnemy.baseAttack + " damage!");
             }, 400);
             
             if (goblins.currentHero.currentHP <= 0) {
                 setTimeout (function() {
-                    game.changeCombatText("<div>You died! Click Restart!");
+                    game.changeCombatText("<div><span id='combat-enemy-name'>" + goblins.currentEnemy.name + " </span> killed you! Click Restart!");
                     $("#restart-button").show();
                 }, 401);
                 
@@ -175,5 +181,14 @@ $(document).ready(function() {
             game.restartGame();
         }
     }),
+    
     game.newGame();
+    $("#goblin-1-name").text(goblins.goblinArray[0].name);
+    $("#goblin-2-name").text(goblins.goblinArray[1].name);
+    $("#goblin-3-name").text(goblins.goblinArray[2].name);
+    $("#goblin-4-name").text(goblins.goblinArray[3].name);
+    game.gobName1.show().arctext({radius: 500});
+    game.gobName2.show().arctext({radius: 500});
+    game.gobName3.show().arctext({radius: 500});
+    game.gobName4.show().arctext({radius: 500});
 });
