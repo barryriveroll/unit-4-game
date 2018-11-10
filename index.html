@@ -19,8 +19,19 @@
             Goblin Grind RPG
         </header>
         <div class="clearfix container">
+            <div class="buttons">
+                <button id="attack-button">Attack! <i class="fas fa-skull-crossbones"></i></button>
+                <button id="restart-button">Restart <i class="fas fa-redo-alt"></i></button>
+            </div>
+            <div class="goblin-div">
+                <div id="current-hero"></div>
+            </div>
+            <div class="goblin-div">
+                <div id="current-enemy"></div>
+            </div>
+            <div id="combat-text"></div>
+            <div id="goal-text">Choose your goblin!</div>
             <div id="hero-select" class="clearfix">
-                Choose Your Goblin<br>
                 <div id="goblin-1" class="goblin-card choose-hero">
                     <img src="assets/images/goblin1.jpg">
                     <div class="goblin-name"></div>
@@ -62,25 +73,10 @@
                     </div>
                 </div>
             </div>
-            <div id="enemy-select" class="clearfix">
-                Choose Your Enemy<br>
-            </div><br>
-            <div class="goblin-div">
-                <div id="current-hero">
-                    Your Hero<br>
-                </div>
-                <div class="buttons">
-                    <button id="attack-button">Attack! <i class="fas fa-skull-crossbones"></i></button><br><br>
-                    <button id="restart-button">Restart <i class="fas fa-redo-alt"></i></button>
+            <div id="enemy-bg">
+                <div id="enemy-select" class="clearfix">
                 </div>
             </div>
-            <div class="goblin-div">
-                <div id="current-enemy">
-                    Your Enemy<br>
-                </div><br>
-            </div>
-
-            <div id="combat-text"></div>
         </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="assets/javascript/game.js"></script> 
