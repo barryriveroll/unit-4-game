@@ -2,7 +2,7 @@ var goblins = {
     goblinArray: [
         goblin1 = {
             name: "Pirate Goblin",
-            nameElement: $("#goblin-1-name"),
+            nameElement: $("#goblin-1-name").hide(),
             maxHP: 150,
             currentHP: 110,
             currentAttack: 18,
@@ -13,7 +13,7 @@ var goblins = {
         },
         goblin2 = {
             name: "Fishing Goblin",
-            nameElement: $("#goblin-2-name"),
+            nameElement: $("#goblin-2-name").hide(),
             maxHP: 120,
             currentHP: 90,
             currentAttack: 10,
@@ -24,7 +24,7 @@ var goblins = {
         },
         goblin3 = {
             name: "Potion Goblin",
-            nameElement: $("#goblin-3-name"),
+            nameElement: $("#goblin-3-name").hide(),
             maxHP: 180,
             currentHP: 80,
             currentAttack: 15,
@@ -35,7 +35,7 @@ var goblins = {
         },
         goblin4 = {
             name: "Mobster Goblin",
-            nameElement: $("#goblin-4-name"),
+            nameElement: $("#goblin-4-name").hide(),
             maxHP: 100,
             currentHP: 100,
             currentAttack: 20,
@@ -54,27 +54,17 @@ var game = {
     heroSelect: false,
     enemySelect: false,
     combatText: $("#combat-text"),
-    // gobName1: $("#goblin-1-name").hide(),
-    // gobName2: $("#goblin-2-name").hide(),
-    // gobName3: $("#goblin-3-name").hide(),
-    // gobName4: $("#goblin-4-name").hide(),
     goalText: $("#goal-text"),
     
     newGame: function() {
         for (var i = 0; i < goblins.goblinArray.length; i++) {
-            // goblins.goblinArray[i].nameElement.hide();
             goblins.goblinArray[i].currentAttack = goblins.goblinArray[i].baseAttack;
             goblins.goblinArray[i].currentHP = goblins.goblinArray[i].maxHP;
             goblins.goblinArray[i].healthBar.css("width", 190);
             goblins.goblinArray[i].healthText.text(goblins.goblinArray[i].currentHP + "/" + goblins.goblinArray[i].maxHP);
-            goblins.goblinArray[i].nameElement.text(goblins.goblinArray[i].name);
-            goblins.goblinArray[i].nameElement.arctext({radius: 350});
+            goblins.goblinArray[i].nameElement.show().arctext({radius: 350});
         }
         $("#restart-button").hide();
-        
-        // game.gobName2.show().arctext({radius: 350});
-        // game.gobName3.show().arctext({radius: 350});
-        // game.gobName4.show().arctext({radius: 350});
         game.goalText.text("Choose your goblin!");
         $("#enemy-select").css("width", "960px");
     },
@@ -142,6 +132,80 @@ var game = {
         
     },
 
+
+    moveToHero: function(goblinID, goblinObj) {
+        $("#enemy-select").append($(".goblin-card"));
+        $(".choose-hero").removeClass("choose-hero").addClass("choose-enemy");
+        
+        var newTop = "+=440px";
+        var newLeft = "";
+        var defaultTop = "-=440px";
+        var defaultLeft = "";
+
+        $("#current-hero").append(goblinObj);
+        $(goblinObj).removeClass("choose-enemy");
+        goblins.currentHero = goblins.goblinArray[goblinID];
+        switch (goblinID) {
+            case 0:
+                newLeft = "-=0px";
+                defaultLeft = "+=0px";
+                break;
+            case 1:
+                newLeft = "+=240px";
+                defaultLeft = "-=240px";
+                break;
+            case 2:
+                newLeft = "+=480px";
+                defaultLeft = "-=480px";
+                break;
+            case 3:
+                newLeft = "+=720px";
+                defaultLeft = "-=720px";
+                break;  
+        }
+        goblins.currentHero.card.animate({ left: newLeft, top: newTop }, 1);
+        setTimeout (function() {
+            goblins.currentHero.card.animate({ left: defaultLeft, top: defaultTop }, 200);
+            
+        }, 5)
+        // $("#enemy-select").animate({ width: "-=240px" }, "fast");
+        game.heroSelect = true;
+        goblins.goblinArray.splice(goblinID, 1);
+        game.goalText.text("Choose your enemy...");
+    },
+
+    moveToEnemy: function(goblinID, goblinObj) {
+        var newTop = "+=440px";
+        var newLeft = "";
+        var defaultTop = "-=440px";
+        var defaultLeft = "";
+
+        $("#current-enemy").append(goblinObj);
+        goblins.currentEnemy = goblins.goblinArray[goblinID];
+        switch (goblinID) {
+            case 0:
+                newLeft = "-=720px";
+                defaultLeft = "+=720px";
+                break;
+            case 1:
+                newLeft = "-=480px";
+                defaultLeft = "+=480px";
+                break;
+            case 2:
+                newLeft = "-=240px";
+                defaultLeft = "+=240px";
+                break;  
+        }
+        goblins.currentEnemy.card.animate({ left: newLeft, top: newTop }, 1);
+        setTimeout (function() {
+            goblins.currentEnemy.card.animate({ left: defaultLeft, top: defaultTop }, 200);
+            
+        }, 5)
+        game.enemySelect = true;
+        goblins.goblinArray.splice(goblinID, 1);
+        game.goalText.text("Fight!!");
+    },
+
     restartGame: function() {
         goblins.goblinArray = goblins.goblinArrayClone.slice();
         goblins.currentHero = "";
@@ -162,34 +226,27 @@ var game = {
     }
 }
 
+function init () {
+    for (var i = 0; i < goblins.goblinArray.length; i++) {
+        goblins.goblinArray[i].nameElement.text(goblins.goblinArray[i].name);
+        goblins.goblinArray[i].nameElement.show().arctext({radius: 350});
+    }
+    game.newGame();
+}
+
 $(document).ready(function() {
+    init();
     $(".goblin-card").on("click", function (e) {
         var classString = e.currentTarget.getAttribute('class');
-        
         if (!game.enemySelect) {
             if (classString.includes('choose-hero')) {
-                $("#enemy-select").css("width", "-=240px");
                 goblins.goblinArrayClone = goblins.goblinArray.slice();
                 var gobIndex = $(".choose-hero").index(this);
-                $("#enemy-select").append($(".goblin-card"));
-                $(".choose-hero").removeClass("choose-hero").addClass("choose-enemy");
-                $("#current-hero").append($(this));
-                $(this).removeClass("choose-enemy");
-                goblins.currentHero = goblins.goblinArray[gobIndex];
-                game.heroSelect = true;
-                goblins.goblinArray.splice(gobIndex, 1);
-                game.goalText.text("Choose your enemy...");
+                game.moveToHero(gobIndex, this);
             } else if (classString.includes('choose-enemy')) {
-                $("#enemy-select").css("width", "-=240px");
                 var gobIndex = $(".choose-enemy").index(this);
-                $("#current-enemy").append($(this));
-                goblins.currentEnemy = goblins.goblinArray[gobIndex];
-                game.enemySelect = true;
-                goblins.goblinArray.splice(gobIndex, 1);
-                game.goalText.text("Fight!!");
+                game.moveToEnemy(gobIndex, this);
             }
-
-            
         }
     });
 
@@ -208,8 +265,5 @@ $(document).ready(function() {
         } else {
             game.restartGame();
         }
-    }),
-    
-    game.newGame();
-    
+    });   
 });
