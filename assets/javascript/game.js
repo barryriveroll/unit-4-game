@@ -3,10 +3,10 @@ var goblins = {
         goblin1 = {
             name: "Pirate Goblin",
             nameElement: $("#goblin-1-name").hide(),
-            maxHP: 150,
-            currentHP: 110,
+            maxHP: 95,
+            currentHP: 120,
             currentAttack: 18,
-            baseAttack: 18,
+            baseAttack: 9,
             healthText: $("#gob-1-health"),
             healthBar: $("#health-bar-1"),
             card: $("#goblin-1")
@@ -14,10 +14,10 @@ var goblins = {
         goblin2 = {
             name: "Fishing Goblin",
             nameElement: $("#goblin-2-name").hide(),
-            maxHP: 120,
+            maxHP: 100,
             currentHP: 90,
             currentAttack: 10,
-            baseAttack: 10,
+            baseAttack: 11,
             healthText: $("#gob-2-health"),
             healthBar: $("#health-bar-2"),
             card: $("#goblin-2")
@@ -25,10 +25,10 @@ var goblins = {
         goblin3 = {
             name: "Potion Goblin",
             nameElement: $("#goblin-3-name").hide(),
-            maxHP: 180,
+            maxHP: 130,
             currentHP: 80,
             currentAttack: 15,
-            baseAttack: 15,
+            baseAttack: 8,
             healthText: $("#gob-3-health"),
             healthBar: $("#health-bar-3"),
             card: $("#goblin-3")
@@ -39,7 +39,7 @@ var goblins = {
             maxHP: 100,
             currentHP: 100,
             currentAttack: 20,
-            baseAttack: 20,
+            baseAttack: 18,
             healthText: $("#gob-4-health"),
             healthBar: $("#health-bar-4"),
             card: $("#goblin-4")
@@ -113,14 +113,16 @@ var game = {
                 game.goalText.text("Choose your next enemy...");
             }
         } else {
-            goblins.currentHero.currentHP -= goblins.currentEnemy.baseAttack;
+            var hitValue = Math.floor(goblins.currentEnemy.baseAttack * 1.6)
+            goblins.currentHero.currentHP -= hitValue;
             setTimeout (function() {
-                game.changeCombatText("<div><span id='combat-enemy-name'>" + goblins.currentEnemy.name + " </span>attacked you for " + goblins.currentEnemy.baseAttack + " damage!");
+                game.changeCombatText("<div><span id='combat-enemy-name'>" + goblins.currentEnemy.name + " </span>attacked you for " + hitValue + " damage!");
             }, 400);
             
             if (goblins.currentHero.currentHP <= 0) {
                 setTimeout (function() {
                     game.changeCombatText("<div><span id='combat-enemy-name'>" + goblins.currentEnemy.name + " </span> killed you! Click Restart!");
+                    game.goalText.text("You died! Click Restart!");
                     $("#restart-button").show();
                 }, 401);
                 
@@ -142,6 +144,7 @@ var game = {
         var defaultTop = "-=440px";
         var defaultLeft = "";
 
+        $(goblinObj).after("<div class='empty-gob-div'></div>");
         $("#current-hero").append(goblinObj);
         $(goblinObj).removeClass("choose-enemy");
         goblins.currentHero = goblins.goblinArray[goblinID];
@@ -164,11 +167,12 @@ var game = {
                 break;  
         }
         goblins.currentHero.card.animate({ left: newLeft, top: newTop }, 1);
+        $(".empty-gob-div").animate({ width: "0px" }, "fast");
         setTimeout (function() {
             goblins.currentHero.card.animate({ left: defaultLeft, top: defaultTop }, 200);
             
         }, 5)
-        // $("#enemy-select").animate({ width: "-=240px" }, "fast");
+        $("#enemy-select").animate({ width: "-=240px" }, "fast");
         game.heroSelect = true;
         goblins.goblinArray.splice(goblinID, 1);
         game.goalText.text("Choose your enemy...");
@@ -180,23 +184,40 @@ var game = {
         var defaultTop = "-=440px";
         var defaultLeft = "";
 
+        $(goblinObj).after("<div class='empty-gob-div'></div>");
         $("#current-enemy").append(goblinObj);
         goblins.currentEnemy = goblins.goblinArray[goblinID];
-        switch (goblinID) {
-            case 0:
-                newLeft = "-=720px";
-                defaultLeft = "+=720px";
-                break;
+        var multiplier = 0;
+
+        switch (goblins.goblinArray.length) {
             case 1:
-                newLeft = "-=480px";
-                defaultLeft = "+=480px";
+                multiplier = 3;
                 break;
             case 2:
-                newLeft = "-=240px";
-                defaultLeft = "+=240px";
+                multiplier = 2;
+                break;
+            case 3:
+                multiplier = 1;
+                break;
+        }
+        switch (goblinID) {
+            case 0:
+                newLeft = "-=" + (720 - (120 * multiplier)) + "px";
+                defaultLeft = "+=" + (720 - (120 * multiplier)) + "px";
+                break;
+            case 1:
+                newLeft = "-=" + (480 - (120 * multiplier)) + "px";
+                defaultLeft = "+=" + (480 - (120 * multiplier)) + "px";
+                break;
+            case 2:
+                newLeft = "-=" + (240 - (120 * multiplier)) + "px";
+                defaultLeft = "+=" + (240 - (120 * multiplier)) + "px";
                 break;  
         }
+
         goblins.currentEnemy.card.animate({ left: newLeft, top: newTop }, 1);
+        $(".empty-gob-div").animate({ width: "0px" }, "fast");
+        $("#enemy-select").animate({ width: "-=240px" }, "fast");
         setTimeout (function() {
             goblins.currentEnemy.card.animate({ left: defaultLeft, top: defaultTop }, 200);
             
@@ -213,6 +234,7 @@ var game = {
         game.heroSelect = false;
         game.enemySelect = false;
         $(".goblin-card").removeClass("choose-enemy").addClass("choose-hero").show();
+        $(".empty-gob-div").remove();
         this.newGame();
 
         for (var i = 0; i < goblins.goblinArray.length; i++) {

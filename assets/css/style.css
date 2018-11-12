@@ -97,8 +97,8 @@ img:hover {
 }
 
 #enemy-select {
-    /* width: 960px;
-    margin: 0 auto; */
+    width: 960px;
+    margin: 0 auto;
 }
 
 #current-enemy {
@@ -122,6 +122,12 @@ img:hover {
     padding-bottom: 40px;
     margin: 0 auto;
     z-index: 3;
+}
+
+.empty-gob-div {
+    width: 240px;
+    height: 340px;
+    float: left;
 }
 
 .goblin-name {
