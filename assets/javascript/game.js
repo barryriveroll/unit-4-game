@@ -6,7 +6,8 @@ var goblins = {
             maxHP: 95,
             currentHP: 120,
             currentAttack: 18,
-            baseAttack: 9,
+            baseAttack: 8,
+            counterAttack: 10,
             healthText: $("#gob-1-health"),
             healthBar: $("#health-bar-1"),
             card: $("#goblin-1")
@@ -14,10 +15,11 @@ var goblins = {
         goblin2 = {
             name: "Fishing Goblin",
             nameElement: $("#goblin-2-name").hide(),
-            maxHP: 100,
+            maxHP: 85,
             currentHP: 90,
             currentAttack: 10,
-            baseAttack: 11,
+            baseAttack: 12,
+            counterAttack: 8,
             healthText: $("#gob-2-health"),
             healthBar: $("#health-bar-2"),
             card: $("#goblin-2")
@@ -25,10 +27,11 @@ var goblins = {
         goblin3 = {
             name: "Potion Goblin",
             nameElement: $("#goblin-3-name").hide(),
-            maxHP: 130,
+            maxHP: 125,
             currentHP: 80,
             currentAttack: 15,
-            baseAttack: 8,
+            baseAttack: 4,
+            counterAttack: 13,
             healthText: $("#gob-3-health"),
             healthBar: $("#health-bar-3"),
             card: $("#goblin-3")
@@ -39,7 +42,8 @@ var goblins = {
             maxHP: 100,
             currentHP: 100,
             currentAttack: 20,
-            baseAttack: 18,
+            baseAttack: 5,
+            counterAttack: 25,
             healthText: $("#gob-4-health"),
             healthBar: $("#health-bar-4"),
             card: $("#goblin-4")
@@ -113,10 +117,9 @@ var game = {
                 game.goalText.text("Choose your next enemy...");
             }
         } else {
-            var hitValue = Math.floor(goblins.currentEnemy.baseAttack * 1.6)
-            goblins.currentHero.currentHP -= hitValue;
+            goblins.currentHero.currentHP -= goblins.currentEnemy.counterAttack;
             setTimeout (function() {
-                game.changeCombatText("<div><span id='combat-enemy-name'>" + goblins.currentEnemy.name + " </span>attacked you for " + hitValue + " damage!");
+                game.changeCombatText("<div><span id='combat-enemy-name'>" + goblins.currentEnemy.name + " </span>attacked you for " + goblins.currentEnemy.counterAttack + " damage!");
             }, 400);
             
             if (goblins.currentHero.currentHP <= 0) {
