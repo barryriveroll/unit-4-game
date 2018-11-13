@@ -236,8 +236,8 @@ var game = {
         game.enemySelect = false;
         $(".goblin-card").removeClass("choose-enemy").addClass("choose-hero").show();
         $(".empty-gob-div").remove();
+        this.combatText.children().remove();
         this.newGame();
-
         for (var i = 0; i < goblins.goblinArray.length; i++) {
             $("#hero-select").append(goblins.goblinArray[i].card);
         }
