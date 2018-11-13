@@ -120,6 +120,7 @@ var game = {
             }, 400);
             
             if (goblins.currentHero.currentHP <= 0) {
+                goblins.currentHero.currentHP = 0;
                 setTimeout (function() {
                     game.changeCombatText("<div><span id='combat-enemy-name'>" + goblins.currentEnemy.name + " </span> killed you! Click Restart!");
                     game.goalText.text("You died! Click Restart!");
